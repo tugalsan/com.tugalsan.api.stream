@@ -1,5 +1,6 @@
 package com.tugalsan.api.stream.client;
 
+import com.tugalsan.api.unsafe.client.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -43,13 +44,7 @@ public class TGS_StreamUtils {
     }
 
     public static <T, R, E extends Exception> Function<T, R> thr1(FunctionWithException<T, R, E> fe) {//USE IT FOR CATCING EXCP IN STREAMS
-        return arg -> {
-            try {
-                return fe.apply(arg);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        };
+        return arg -> TGS_UnSafe.compile(() -> fe.apply(arg));
     }
 
     public static IntStream iterate(int from0, int to10_notEnclosed) {
