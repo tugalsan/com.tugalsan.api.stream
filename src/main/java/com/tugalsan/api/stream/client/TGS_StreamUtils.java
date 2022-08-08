@@ -93,7 +93,8 @@ public class TGS_StreamUtils {
     }
 
     public static <T> Stream<T> of(Enumeration<T> enumeration) {
-        return of(new Iterator<>() {//FIX for GWT: as in enumeration.asIterator() 
+        //return of(enumeration.asIterator());//GWT does not like u; check on 2.10 version again!
+        return of(new Iterator<>() {
             @Override
             public boolean hasNext() {
                 return enumeration.hasMoreElements();
