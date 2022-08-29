@@ -2,6 +2,7 @@ package com.tugalsan.api.stream.client;
 
 import com.tugalsan.api.unsafe.client.*;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.stream.*;
 
@@ -11,6 +12,12 @@ public class TGS_StreamUtils {
         Consumer<Object> NOOP = whatever -> {
         };
         return NOOP;
+    }
+
+    //https://stackoverflow.com/questions/23699371/java-8-distinct-by-property
+    public static <T> Predicate<T> filterDistinct(Function<? super T, ?> key) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(key.apply(t));
     }
 
     public static <T> List<T> toList(Stream<T> map) {
