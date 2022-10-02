@@ -20,7 +20,7 @@ public class TGS_StreamUtils {
         return t -> seen.add(key.apply(t));
     }
 
-    public static <T> List<T> toList(Stream<T> map) {
+    public static <T> List<T> toLst(Stream<T> map) {
         return map.collect(Collectors.toCollection(ArrayList::new));
     }
 
