@@ -24,15 +24,15 @@ public class TGS_StreamUtils {
         return map.collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public static List<Integer> toList(IntStream map) {
+    public static List<Integer> toLst(IntStream map) {
         return map.boxed().collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public static List<Long> toList(LongStream map) {
+    public static List<Long> toLst(LongStream map) {
         return map.boxed().collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public static List<Double> toList(DoubleStream map) {
+    public static List<Double> toLst(DoubleStream map) {
         return map.boxed().collect(Collectors.toCollection(ArrayList::new));
     }
 
