@@ -77,10 +77,9 @@ public class TGS_StreamUtils {
     }
 
     public static IntStream forward(int from0, int to10_notEnclosed, int by) {
-        if (to10_notEnclosed <= from0) {
-            to10_notEnclosed = from0;
-        }
-        return IntStream.iterate(from0, i -> i + by).limit(to10_notEnclosed - from0);
+        var final_to10_notEnclosed = to10_notEnclosed <= from0 ? from0 : to10_notEnclosed;
+//        return IntStream.iterate(from0, i -> i + by).limit(to10_notEnclosed - from0);
+        return IntStream.iterate(from0, i -> i < final_to10_notEnclosed, i -> i + by);
     }
 
     public static IntStream forward(int from0, int to10_notEnclosed) {
@@ -88,10 +87,9 @@ public class TGS_StreamUtils {
     }
 
     public static IntStream reverse(int from0, int to10_notEnclosed, int by) {
-        if (to10_notEnclosed <= from0) {
-            to10_notEnclosed = from0;
-        }
-        return IntStream.iterate(to10_notEnclosed - 1, i -> i - by).limit(to10_notEnclosed - from0);
+        var final_to10_notEnclosed = to10_notEnclosed <= from0 ? from0 : to10_notEnclosed;
+        return IntStream.iterate(to10_notEnclosed, i -> i > from0, i -> i - by);
+//        return IntStream.iterate(to10_notEnclosed - 1, i -> i - by).limit(to10_notEnclosed - from0);
     }
 
     public static IntStream reverse(int from0, int to10_notEnclosed) {
