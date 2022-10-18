@@ -91,7 +91,8 @@ public class TGS_StreamUtils {
         if (forward.length == 0) {
             return IntStream.empty();
         }
-        List<Integer> list = new ArrayList(List.of(forward));
+        List<Integer> list = Arrays.stream(forward).boxed()
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
         Collections.reverse(list);
         return list.stream().mapToInt(Integer::intValue);
     }
