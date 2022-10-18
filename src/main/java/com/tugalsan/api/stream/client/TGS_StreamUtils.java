@@ -87,9 +87,13 @@ public class TGS_StreamUtils {
     }
 
     public static IntStream reverse(int from0, int to10_notEnclosed, int by) {
-        var final_to10_notEnclosed = to10_notEnclosed <= from0 ? from0 : to10_notEnclosed;
-        return IntStream.iterate(to10_notEnclosed, i -> i > from0, i -> i - by);
-//        return IntStream.iterate(to10_notEnclosed - 1, i -> i - by).limit(to10_notEnclosed - from0);
+        var forward = forward(from0, to10_notEnclosed, by).toArray();
+        if (forward.length == 0) {
+            return IntStream.empty();
+        }
+        List<Integer> list = new ArrayList(List.of(forward));
+        Collections.reverse(list);
+        return list.stream().mapToInt(Integer::intValue);
     }
 
     public static IntStream reverse(int from0, int to10_notEnclosed) {
