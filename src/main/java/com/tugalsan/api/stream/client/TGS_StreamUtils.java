@@ -54,17 +54,17 @@ public class TGS_StreamUtils {
         return arg -> TGS_UnSafe.compile(() -> fe.apply(arg));
     }
 
-    public static IntStream iterate(int from0, int to10_notEnclosed) {
-        return iterate(from0, to10_notEnclosed, 1);
-    }
-
-    public static IntStream iterate(int from0, int to10_notEnclosed, int by) {
-        if (from0 <= to10_notEnclosed) {
-            return forward(from0, to10_notEnclosed, by);
-        } else {
-            return reverse(from0, to10_notEnclosed, by);
-        }
-    }
+//    public static IntStream iterate(int start, int end) {
+//        return iterate(start, end, 1);
+//    }
+//
+//    public static IntStream iterate(int start, int end, int by) {
+//        if (start <= end) {
+//            return forward(start, end, by);
+//        } else {
+//            return reverse(start, end, by);
+//        }
+//    }
 
     public static IntStream countDownTo0(int from) {
         return reverse(0, from + 1);
