@@ -75,7 +75,13 @@ public class TGS_StreamUtils {
             return IntStream.empty();
         }
 //        return IntStream.iterate(from0, i -> i < to10_notEnclosed, i -> i + (by < 0 ? -by : by));//gwt does not like u
-        return IntStream.iterate(from0, i -> i + (by < 0 ? -by : by)).takeWhile(i -> i < to10_notEnclosed);
+//        return IntStream.iterate(from0, i -> i + (by < 0 ? -by : by)).takeWhile(i -> i < to10_notEnclosed);//gwt does not like u
+//        return IntStream.iterate(from0, i -> i + (by < 0 ? -by : by)).limit((to10_notEnclosed - from0) / by);//not working
+        List<Integer> buffer = new ArrayList();
+        for (var i = from0; i < to10_notEnclosed; i += by) {
+            buffer.add(i);
+        }
+        return buffer.stream().mapToInt(i -> i);
     }
 
     public static IntStream forward(int from0, int to10_notEnclosed) {
