@@ -65,7 +65,6 @@ public class TGS_StreamUtils {
 //            return reverse(start, end, by);
 //        }
 //    }
-
     public static IntStream countDownTo0(int from) {
         return reverse(0, from + 1);
     }
@@ -130,7 +129,7 @@ public class TGS_StreamUtils {
 
     public static Stream<Boolean> of(boolean[] array) {
         Stream.Builder<Boolean> builder = Stream.builder();
-        IntStream.range(0, array.length).forEachOrdered(i -> builder.add(array[i]));
+        IntStream.range(0, array.length).forEachOrdered(i -> builder.add(array[i]));// there is no Arrays.stream(boolean[]) :(
         return builder.build();
     }
 
