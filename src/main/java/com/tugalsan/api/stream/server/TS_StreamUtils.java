@@ -10,7 +10,7 @@ import java.nio.channels.WritableByteChannel;
 public class TS_StreamUtils {
 
     public static void transfer(InputStream src0, OutputStream dest0) {
-        TGS_UnSafe.execute(() -> {
+        TGS_UnSafe.run(() -> {
             try ( var src = src0;  var dest = dest0;  var inputChannel = Channels.newChannel(src);  var outputChannel = Channels.newChannel(dest);) {
                 transfer(inputChannel, outputChannel);
             }
@@ -18,7 +18,7 @@ public class TS_StreamUtils {
     }
 
     public static void transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
-        TGS_UnSafe.execute(() -> {
+        TGS_UnSafe.run(() -> {
             try ( var src = src0;  var dest = dest0;) {
                 var buffer = ByteBuffer.allocateDirect(16 * 1024);
                 while (src.read(buffer) != -1) {
@@ -35,7 +35,7 @@ public class TS_StreamUtils {
     }
 
     public static int readInt(InputStream is0) {
-        return TGS_UnSafe.compile(() -> {
+        return TGS_UnSafe.call(() -> {
             try ( var is = is0) {
                 var byte_array_4 = new byte[4];
                 byte_array_4[0] = (byte) is.read();

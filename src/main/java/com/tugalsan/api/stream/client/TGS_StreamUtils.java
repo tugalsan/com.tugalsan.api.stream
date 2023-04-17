@@ -8,7 +8,7 @@ import java.util.stream.*;
 
 public class TGS_StreamUtils {
 
-    public static Consumer<Object> doNothing() {
+    public static Consumer<Object> runNothing() {
         Consumer<Object> NOOP = whatever -> {
         };
         return NOOP;
@@ -51,7 +51,7 @@ public class TGS_StreamUtils {
     }
 
     public static <T, R, E extends Exception> Function<T, R> thr1(FunctionWithException<T, R, E> fe) {//USE IT FOR CATCING EXCP IN STREAMS
-        return arg -> TGS_UnSafe.compile(() -> fe.apply(arg));
+        return arg -> TGS_UnSafe.call(() -> fe.apply(arg));
     }
 
 //    public static IntStream iterate(int start, int end) {
