@@ -6,12 +6,31 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TS_StreamUtils {
 
+    public static <T> Stream<List<T>> slidingWindow(List<T> list, int size, boolean showEvenOnInsufficientInput) {
+        if (size < 1) {
+            size = 1;
+        }
+        if (size > list.size()) {
+            if (showEvenOnInsufficientInput) {
+                size = list.size();
+            } else {
+                return Stream.empty();
+            }
+        }
+        var fSize = size;
+        return IntStream.range(0, list.size() - fSize + 1)
+                .mapToObj(start -> list.subList(start, start + fSize));
+    }
+
     public static void transfer(InputStream src0, OutputStream dest0) {
         TGS_UnSafe.run(() -> {
-            try ( var src = src0;  var dest = dest0;  var inputChannel = Channels.newChannel(src);  var outputChannel = Channels.newChannel(dest);) {
+            try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
                 transfer(inputChannel, outputChannel);
             }
         });
@@ -19,7 +38,7 @@ public class TS_StreamUtils {
 
     public static void transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
         TGS_UnSafe.run(() -> {
-            try ( var src = src0;  var dest = dest0;) {
+            try (var src = src0; var dest = dest0;) {
                 var buffer = ByteBuffer.allocateDirect(16 * 1024);
                 while (src.read(buffer) != -1) {
                     buffer.flip();
@@ -36,7 +55,7 @@ public class TS_StreamUtils {
 
     public static int readInt(InputStream is0) {
         return TGS_UnSafe.call(() -> {
-            try ( var is = is0) {
+            try (var is = is0) {
                 var byte_array_4 = new byte[4];
                 byte_array_4[0] = (byte) is.read();
                 byte_array_4[1] = (byte) is.read();
