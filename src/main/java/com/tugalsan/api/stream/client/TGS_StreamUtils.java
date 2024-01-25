@@ -9,9 +9,8 @@ import java.util.stream.*;
 public class TGS_StreamUtils {
 
     public static Consumer<Object> runNothing() {
-        Consumer<Object> NOOP = whatever -> {
+        return whatever -> {
         };
-        return NOOP;
     }
 
     //https://stackoverflow.com/questions/23699371/java-8-distinct-by-property
@@ -150,7 +149,7 @@ public class TGS_StreamUtils {
         }
         private int value = 0;
 
-        private int getOffset() {
+        public int getOffset() {
             return value;
         }
 
@@ -173,7 +172,7 @@ public class TGS_StreamUtils {
     }
 
     public static <T> void forEachOptions(Stream<T> stream, BiConsumer<T, Options> consumer) {
-        Spliterator<T> s = stream.spliterator();
+        var s = stream.spliterator();
         var hadNext = true;
         var b = new Options();
         while (hadNext && !b.isStop()) {
