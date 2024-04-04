@@ -1,6 +1,6 @@
 package com.tugalsan.api.stream.server;
 
-import com.tugalsan.api.unsafe.client.*;
+import com.tugalsan.api.union.client.TGS_Union;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -28,41 +28,42 @@ public class TS_StreamUtils {
                 .mapToObj(start -> list.subList(start, start + fSize));
     }
 
-    public static void transfer(InputStream src0, OutputStream dest0) {
-        TGS_UnSafe.run(() -> {
-            try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
-                transfer(inputChannel, outputChannel);
-            }
-        });
+    public static TGS_Union<Boolean> transfer(InputStream src0, OutputStream dest0) {
+        try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
+            return transfer(inputChannel, outputChannel);
+        } catch (IOException ex) {
+            return TGS_Union.ofThrowable(ex);
+        }
     }
 
-    public static void transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
-        TGS_UnSafe.run(() -> {
-            try (var src = src0; var dest = dest0;) {
-                var buffer = ByteBuffer.allocateDirect(16 * 1024);
-                while (src.read(buffer) != -1) {
-                    buffer.flip();
-                    dest.write(buffer);
-                    buffer.compact();
-                }
+    public static TGS_Union<Boolean> transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
+        try (var src = src0; var dest = dest0;) {
+            var buffer = ByteBuffer.allocateDirect(16 * 1024);
+            while (src.read(buffer) != -1) {
                 buffer.flip();
-                while (buffer.hasRemaining()) {
-                    dest.write(buffer);
-                }
+                dest.write(buffer);
+                buffer.compact();
             }
-        });
+            buffer.flip();
+            while (buffer.hasRemaining()) {
+                dest.write(buffer);
+            }
+            return TGS_Union.of(true);
+        } catch (IOException ex) {
+            return TGS_Union.ofThrowable(ex);
+        }
     }
 
-    public static int readInt(InputStream is0) {
-        return TGS_UnSafe.call(() -> {
-            try (var is = is0) {
-                var byte_array_4 = new byte[4];
-                byte_array_4[0] = (byte) is.read();
-                byte_array_4[1] = (byte) is.read();
-                byte_array_4[2] = (byte) is.read();
-                byte_array_4[3] = (byte) is.read();
-                return ByteBuffer.wrap(byte_array_4).getInt();
-            }
-        });
+    public static TGS_Union<Integer> readInt(InputStream is0) {
+        try (var is = is0) {
+            var byte_array_4 = new byte[4];
+            byte_array_4[0] = (byte) is.read();
+            byte_array_4[1] = (byte) is.read();
+            byte_array_4[2] = (byte) is.read();
+            byte_array_4[3] = (byte) is.read();
+            return TGS_Union.of(ByteBuffer.wrap(byte_array_4).getInt());
+        } catch (IOException ex) {
+            return TGS_Union.ofThrowable(ex);
+        }
     }
 }
