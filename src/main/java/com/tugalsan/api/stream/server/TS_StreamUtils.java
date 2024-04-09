@@ -32,7 +32,7 @@ public class TS_StreamUtils {
         try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
             return transfer(inputChannel, outputChannel);
         } catch (IOException ex) {
-            return TGS_Union.ofThrowable(ex);
+            return TGS_Union.ofExcuse(ex);
         }
     }
 
@@ -50,7 +50,7 @@ public class TS_StreamUtils {
             }
             return TGS_Union.of(true);
         } catch (IOException ex) {
-            return TGS_Union.ofThrowable(ex);
+            return TGS_Union.ofExcuse(ex);
         }
     }
 
@@ -63,7 +63,7 @@ public class TS_StreamUtils {
             byte_array_4[3] = (byte) is.read();
             return TGS_Union.of(ByteBuffer.wrap(byte_array_4).getInt());
         } catch (IOException ex) {
-            return TGS_Union.ofThrowable(ex);
+            return TGS_Union.ofExcuse(ex);
         }
     }
 }
