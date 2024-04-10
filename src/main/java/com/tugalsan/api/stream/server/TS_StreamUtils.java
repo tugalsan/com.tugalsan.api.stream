@@ -1,7 +1,7 @@
 package com.tugalsan.api.stream.server;
 
-import com.tugalsan.api.union.client.TGS_Union;
 import com.tugalsan.api.union.client.TGS_UnionExcuse;
+import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -29,15 +29,15 @@ public class TS_StreamUtils {
                 .mapToObj(start -> list.subList(start, start + fSize));
     }
 
-    public static TGS_UnionExcuse transfer(InputStream src0, OutputStream dest0) {
+    public static TGS_UnionExcuseVoid transfer(InputStream src0, OutputStream dest0) {
         try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
             return transfer(inputChannel, outputChannel);
         } catch (IOException ex) {
-            return TGS_UnionExcuse.ofExcuse(ex);
+            return TGS_UnionExcuseVoid.ofExcuse(ex);
         }
     }
 
-    public static TGS_UnionExcuse transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
+    public static TGS_UnionExcuseVoid transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
         try (var src = src0; var dest = dest0;) {
             var buffer = ByteBuffer.allocateDirect(16 * 1024);
             while (src.read(buffer) != -1) {
@@ -49,22 +49,22 @@ public class TS_StreamUtils {
             while (buffer.hasRemaining()) {
                 dest.write(buffer);
             }
-            return TGS_UnionExcuse.ofVoid();
+            return TGS_UnionExcuseVoid.ofVoid();
         } catch (IOException ex) {
-            return TGS_UnionExcuse.ofExcuse(ex);
+            return TGS_UnionExcuseVoid.ofExcuse(ex);
         }
     }
 
-    public static TGS_Union<Integer> readInt(InputStream is0) {
+    public static TGS_UnionExcuse<Integer> readInt(InputStream is0) {
         try (var is = is0) {
             var byte_array_4 = new byte[4];
             byte_array_4[0] = (byte) is.read();
             byte_array_4[1] = (byte) is.read();
             byte_array_4[2] = (byte) is.read();
             byte_array_4[3] = (byte) is.read();
-            return TGS_Union.of(ByteBuffer.wrap(byte_array_4).getInt());
+            return TGS_UnionExcuse.of(ByteBuffer.wrap(byte_array_4).getInt());
         } catch (IOException ex) {
-            return TGS_Union.ofExcuse(ex);
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 }
