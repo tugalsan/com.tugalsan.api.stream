@@ -1,6 +1,7 @@
 package com.tugalsan.api.stream.server;
 
 import com.tugalsan.api.union.client.TGS_Union;
+import com.tugalsan.api.union.client.TGS_UnionExcuse;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -28,15 +29,15 @@ public class TS_StreamUtils {
                 .mapToObj(start -> list.subList(start, start + fSize));
     }
 
-    public static TGS_Union<Boolean> transfer(InputStream src0, OutputStream dest0) {
+    public static TGS_UnionExcuse transfer(InputStream src0, OutputStream dest0) {
         try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
             return transfer(inputChannel, outputChannel);
         } catch (IOException ex) {
-            return TGS_Union.ofExcuse(ex);
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
-    public static TGS_Union<Boolean> transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
+    public static TGS_UnionExcuse transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
         try (var src = src0; var dest = dest0;) {
             var buffer = ByteBuffer.allocateDirect(16 * 1024);
             while (src.read(buffer) != -1) {
@@ -48,9 +49,9 @@ public class TS_StreamUtils {
             while (buffer.hasRemaining()) {
                 dest.write(buffer);
             }
-            return TGS_Union.of(true);
+            return TGS_UnionExcuse.ofVoid();
         } catch (IOException ex) {
-            return TGS_Union.ofExcuse(ex);
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
