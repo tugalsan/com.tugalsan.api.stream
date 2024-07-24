@@ -8,11 +8,6 @@ import java.util.stream.*;
 
 public class TGS_StreamUtils {
 
-    public static Consumer<Object> runNothing() {
-        return whatever -> {
-        };
-    }
-
     //https://stackoverflow.com/questions/23699371/java-8-distinct-by-property
     public static <T> Predicate<T> filterDistinct(Function<? super T, ?> key) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
