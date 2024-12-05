@@ -6,10 +6,14 @@ import java.util.ListIterator;
 
 public class TGS_StreamReverseIterableFromList<T> implements Iterable<T> {
 
-    public TGS_StreamReverseIterableFromList(List<T> l) {
-        this.lst = l;
+    private TGS_StreamReverseIterableFromList(List<T> lst) {
+        this.lst = lst;
     }
     private final List<T> lst;
+
+    public static <T> TGS_StreamReverseIterableFromList<T> of(List<T> lst) {
+        return new TGS_StreamReverseIterableFromList(lst);
+    }
 
     @Override
     public Iterator<T> iterator() {
