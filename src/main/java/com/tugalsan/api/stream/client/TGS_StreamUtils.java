@@ -1,7 +1,7 @@
 package com.tugalsan.api.stream.client;
 
 
-import com.tugalsan.api.function.client.maythrow.checkedexceptions.TGS_FuncMTCEUtils;
+import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
@@ -46,7 +46,7 @@ public class TGS_StreamUtils {
     }
 
     public static <T, R, E extends Exception> Function<T, R> thr1(FunctionWithException<T, R, E> fe) {//USE IT FOR CATCING EXCP IN STREAMS
-        return arg -> TGS_FuncMTCEUtils.call(() -> fe.apply(arg));
+        return arg -> TGS_FuncMTCUtils.call(() -> fe.apply(arg));
     }
 
 //    public static IntStream iterate(int start, int end) {

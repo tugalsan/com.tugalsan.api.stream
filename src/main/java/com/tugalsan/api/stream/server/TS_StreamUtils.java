@@ -1,7 +1,7 @@
 package com.tugalsan.api.stream.server;
 
 
-import com.tugalsan.api.function.client.maythrow.checkedexceptions.TGS_FuncMTCEUtils;
+import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -30,7 +30,7 @@ public class TS_StreamUtils {
     }
 
     public static void transfer(InputStream src0, OutputStream dest0) {
-        TGS_FuncMTCEUtils.run(() -> {
+        TGS_FuncMTCUtils.run(() -> {
             try (var src = src0; var dest = dest0; var inputChannel = Channels.newChannel(src); var outputChannel = Channels.newChannel(dest);) {
                 transfer(inputChannel, outputChannel);
             }
@@ -38,7 +38,7 @@ public class TS_StreamUtils {
     }
 
     public static void transfer(ReadableByteChannel src0, WritableByteChannel dest0) {
-        TGS_FuncMTCEUtils.run(() -> {
+        TGS_FuncMTCUtils.run(() -> {
             try (var src = src0; var dest = dest0;) {
                 var buffer = ByteBuffer.allocateDirect(16 * 1024);
                 while (src.read(buffer) != -1) {
@@ -55,7 +55,7 @@ public class TS_StreamUtils {
     }
 
     public static int readInt(InputStream is0) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             try (var is = is0) {
                 var byte_array_4 = new byte[4];
                 byte_array_4[0] = (byte) is.read();
