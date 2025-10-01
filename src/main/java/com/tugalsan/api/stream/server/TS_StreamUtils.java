@@ -1,15 +1,11 @@
 package com.tugalsan.api.stream.server;
 
-
-import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
+import module com.tugalsan.api.function;
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
-import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.nio.*;
+import java.nio.channels.*;
+import java.util.*;
+import java.util.stream.*;
 
 public class TS_StreamUtils {
 
